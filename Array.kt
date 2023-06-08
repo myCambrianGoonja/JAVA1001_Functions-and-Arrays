@@ -12,3 +12,12 @@ fun averagingArray(inputArray: Array<Int>): Double {
 
     return sum/inputArray.size
 }
+
+fun arrayContains(inputArray: Array<Int>, valueToSearch: Int): Boolean {
+    for(number in inputArray) {
+        if(number == valueToSearch) {
+            return true
+        } 
+        return false
+    }
+}
