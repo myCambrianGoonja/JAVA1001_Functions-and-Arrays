@@ -1,6 +1,10 @@
 fun main() {
     var arrayValue: Array<Int> = arrayOf(1,2,3,4,5)
-   print(averagingArray(arrayValue))
+    val containsValue = arrayContains(arrayValue, 4)
+    println("${containsValue} DOES contain")
+
+    val reversedArray = reverseArray(arrayValue)
+    println("${reversedArray.asList()} Reverse is")
 }
 
 fun averagingArray(inputArray: Array<Int>): Double {
@@ -18,6 +22,14 @@ fun arrayContains(inputArray: Array<Int>, valueToSearch: Int): Boolean {
         if(number == valueToSearch) {
             return true
         } 
-        return false
     }
+        return false
+}
+
+fun reverseArray(inputArray: Array<Int>): Array<Int> {
+    var newArray: Array<Int> = arrayOf()
+    for (i in inputArray.size - 1 downTo 0) {
+        newArray = newArray.plus(inputArray[i])
+    }
+    return newArray
 }
