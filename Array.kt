@@ -6,7 +6,7 @@ fun main() {
     val reversedArray = reverseArray(arrayValue)
     println("${reversedArray.asList()} Reverse is")
 
-    var encodedString = caesarCipherEncoding("xXyaA")
+    var encodedString = caesarCipherEncoding("abxyz")
 
     for(letter in encodedString) {
         print(letter)
@@ -16,9 +16,16 @@ fun main() {
 
 fun caesarCipherEncoding(normalString: String): Array<Char> {
     var encodedString: Array<Char> = arrayOf()
+    val shift = 3
+    val balancing = 26
     for(letter in normalString) {
-        encodedString = encodedString.plus((letter.code + 3).toChar())
-        println("letter code of ${letter} ${letter.code}")
+        var l = letter
+        println("letter code of ${l} ${l.code}")
+        if((letter.code >= 88 && letter.code <= 90) || (letter.code >=120 && letter.code <=122) ) {
+            l = (letter.code - balancing).toChar()
+        }
+        println("letter code of ${l} ${l.code}")
+        encodedString = encodedString.plus((l.code + shift).toChar())
     }
  
     return encodedString
