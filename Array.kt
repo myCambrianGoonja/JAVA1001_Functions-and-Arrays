@@ -5,6 +5,23 @@ fun main() {
 
     val reversedArray = reverseArray(arrayValue)
     println("${reversedArray.asList()} Reverse is")
+
+    var encodedString = caesarCipherEncoding("xXyaA")
+
+    for(letter in encodedString) {
+        print(letter)
+    }
+     
+}
+
+fun caesarCipherEncoding(normalString: String): Array<Char> {
+    var encodedString: Array<Char> = arrayOf()
+    for(letter in normalString) {
+        encodedString = encodedString.plus((letter.code + 3).toChar())
+        println("letter code of ${letter} ${letter.code}")
+    }
+ 
+    return encodedString
 }
 
 fun averagingArray(inputArray: Array<Int>): Double {
