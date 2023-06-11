@@ -1,7 +1,23 @@
+/*
+    main() is calling the usersChoice() -> gives user the 
+    option to choose which operation they want to perform
+ */
 fun main() {
   usersChoice()
 }
 
+/*
+    userChoice() -> lets the user select from encoding 
+    averaging, testing contains and reversing an intiger array
+    once the value is validated with checkValidityInt() method 
+    the option is passed to the usersChoiceResults() method
+
+    @property optionSelected = has the value of the option the 
+    user has selected
+
+    @property validInt = has the true or false value that has been 
+    checked in the checkValidityInt()
+ */
 fun usersChoice() {
   println("Bonjour please select your action option from the list below")
   println("1. You want to encode your text through Caesar Cipher Encoding")
@@ -17,6 +33,44 @@ fun usersChoice() {
   }
 }
 
+/*
+    usersChoiceResults() -> in this method we execute the operation selected by the user
+    and it is been distributed with switch statement
+    1: -> the validity of the string entered is checked and send to the caesarCipherEncoding()
+    2: -> the validity of the int array entered is checked and send to the averagingArray() 
+    the results are then printed. 
+    3: -> the validity of the int array and the value to test it containes is checked and then 
+    sent to the arrayContains()
+    4: -> the validity of the int array entered and then sent to the 
+    reverseArray() 
+
+    @property originalCode = has the value of the characters entred 
+    by the user 
+    @property encodedCharacters = has the result of the 
+    caesarCipherEncoding()
+    
+    @property intArray = has the consecutive values of integer 
+    entred by the user
+    @property averageResult = has the result of the 
+
+    setupArrayFromString() -> converts the intArray into an 
+    int array 
+
+    averagingArray() -> used for averaging an integer array
+
+    @property containsValue = user input of value that needs to be 
+    searched in a given array
+    @property valid = contains the result of the validity test done on the 
+    input entred by user in containsValue
+    @property doesContain = holds a boolean value for the result 
+    of the arrayContains() which lets us know whether the value 
+    does exist in the array or not
+
+    @property reverseArray = containes the value of reveersed array
+    in string format. So that it can be directly printed to the console 
+    without any loops
+
+ */
 fun usersChoiceResults(selectedOption: Int ? ) {
 
   when(selectedOption) {
@@ -73,10 +127,21 @@ fun usersChoiceResults(selectedOption: Int ? ) {
   }
 }
 
+/*
+    This method takes the user input in int1,int2,int3,int4 format
+    and converts into an interger Array
+
+    @property inputString = the value entred by the user is
+    stored here
+    @property stringInt = the multiple int values are seperated 
+    by commas and strored in this variable
+    @property intArray = array that has the stored values from 
+    stringInt converted into the int format
+ */
 fun setupArrayFromString(): Array < Int > ? {
   var inputString = readLine()
   var stringInt = inputString.toString().split(",")
-  val intArray = mutableListOf < Int > ()
+  val intArray = mutableListOf <Int> ()
 
   for (i in stringInt) {
     val intValue = i?.toIntOrNull()
@@ -87,15 +152,23 @@ fun setupArrayFromString(): Array < Int > ? {
       intArray.add(intValue)
     }
   }
-
-  if (intArray.size == 0) {
-    println("Please enter more than one value in the format 2,34,54,23")
-    return null
-  } else {
-    return intArray.toTypedArray()
-  }
+    
+    //IF USER HAS ENTRED ONLY ONE VALUE THEN IT SHOWS THIS ERROR
+    if (intArray.size == 0) {
+        println("Please enter more than one value in the format 2,34,54,23")
+        return null
+    } else {
+        return intArray.toTypedArray()
+    }
 }
 
+/*
+    Whenever the user inters a single interger value its 
+    validity is checked in this method
+
+    @property value = containes the single integer 
+    value that needs to be validated
+ */
 fun checkValidityInt(value: Int ? ): Boolean {
   if (value == null || value >= 5) {
     println("Please enter a valid numeric value")
@@ -105,6 +178,25 @@ fun checkValidityInt(value: Int ? ): Boolean {
   }
 }
 
+/*
+    This is a method that implemets the encoding method 
+    first invented by Caesar Cipher, 
+    in this method we use 
+    @property shift = to shift the value of the entred character 
+    from 3 digits, ie, if the value is A it will be converted to 
+    D , B -> F etc 
+    @perperty balancing = if the value entred by the user contains 
+    'X' whoes code -> 88 + 3 = 92 which is represented by '['
+    however in original encoding method once it reaches X it is 
+    brough back to A thus subtracting the code by 26 (because 
+    there are 26 characters - the one we are at it brings us to a
+    if we are at X and B if we are Z and so on). Further note that
+    the if condition holds two values between 88 to 90 for 'X'
+    and 120 to 122 for 'x'
+
+    @property letter = containes one letter from the array normalString
+    @property encodedString = contains the result encoded string 
+ */
 fun caesarCipherEncoding(normalString: String): Array < Char > {
   var encodedString: Array < Char > = arrayOf()
   val shift = 3
@@ -123,6 +215,12 @@ fun caesarCipherEncoding(normalString: String): Array < Char > {
   return encodedString
 }
 
+/*
+    averagingArray() does the average of the array entered
+
+    @property sum = holds the sum of all the values in the array 
+    @property number = holds the single value of the inputArray loop
+ */
 fun averagingArray(inputArray: Array < Int > ? ): Double ? {
   if (inputArray !== null && inputArray.isNotEmpty()) {
     var sum = 0.0
@@ -137,6 +235,16 @@ fun averagingArray(inputArray: Array < Int > ? ): Double ? {
   }
 }
 
+/*
+    arrayContains() -> method to check whether the value entred
+    exists in an array. 
+
+    @property inputArray = containes the array entred by the user
+    @property valueToSearch = containes the value that needs to be 
+    checked in the array
+    
+    if the value exists then we return true if not we return false
+ */
 fun arrayContains(inputArray: Array < Int > , valueToSearch: Int ? ): Boolean {
   for (number in inputArray) {
     if (number == valueToSearch) {
@@ -146,6 +254,15 @@ fun arrayContains(inputArray: Array < Int > , valueToSearch: Int ? ): Boolean {
   return false
 }
 
+/*
+    reverseArray() -> method to reverse the array entred by the user
+
+    @property inputArray = array entred by the user  
+
+    this method returns the array in a string datatype 
+    that seperates each integer by a , so that there 
+    are no issues in printing the results to the user.
+ */
 fun reverseArray(inputArray: Array < Int > ): String {
   var newArray: Array < Int > = arrayOf()
   for (i in inputArray.size - 1 downTo 0) {
