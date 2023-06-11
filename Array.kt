@@ -1,3 +1,4 @@
+import java.util.Stack
 /*
     main() is calling the usersChoice() -> gives user the 
     option to choose which operation they want to perform
@@ -28,8 +29,10 @@ fun usersChoice() {
   var optionSelected: Int ? = readLine()?.toIntOrNull()
   var validInt = checkValidityInt(optionSelected)
 
-  if (validInt) {
+  if (validInt && optionSelected <= 4) {
     usersChoiceResults(optionSelected)
+  } else {
+    println("Please select a valid option")
   }
 }
 
@@ -115,13 +118,14 @@ fun usersChoiceResults(selectedOption: Int ? ) {
     }
     4 -> {
       println("Enter the int array you want to reverse")
-      var intArray: Array < Int > ? = setupArrayFromString()
+      var intStack: Stack < Int > ? = setUpStackFromString()
 
-      if (intArray !== null && intArray.isNotEmpty()) {
-        var reverseArray = reverseArray(intArray)
+      if (intStack !== null && intStack.isNotEmpty() && intStack.size > 1) {
+        var newStack: Stack < Int > = intStack;
+        var reverseArray = reverseArray(newStack)
         println("The reverse of the array you entered is ${reverseArray}")
       } else {
-        println("Array value cannot be empty")
+        println("Array value cannot be empty or have just one value")
       }
     }
   }
@@ -141,10 +145,10 @@ fun usersChoiceResults(selectedOption: Int ? ) {
 fun setupArrayFromString(): Array < Int > ? {
   var inputString = readLine()
   var stringInt = inputString.toString().split(",")
-  val intArray = mutableListOf <Int> ()
+  val intArray = mutableListOf < Int > ()
 
   for (i in stringInt) {
-    val intValue = i?.toIntOrNull()
+    val intValue = i.toIntOrNull()
 
     if (intValue == null) {
       println("Please enter a valid value")
@@ -152,14 +156,29 @@ fun setupArrayFromString(): Array < Int > ? {
       intArray.add(intValue)
     }
   }
-    
-    //IF USER HAS ENTRED ONLY ONE VALUE THEN IT SHOWS THIS ERROR
-    if (intArray.size == 0) {
-        println("Please enter more than one value in the format 2,34,54,23")
-        return null
+  //IF USER HAS ENTRED ONLY ONE VALUE THEN IT SHOWS THIS ERROR
+  if (intArray.size == 0) {
+    println("Please enter more than one value in the format 2,34,54,23")
+    return null
+  } else {
+    return intArray.toTypedArray()
+  }
+}
+
+fun setUpStackFromString(): Stack < Int > ? {
+  var inputString = readLine()
+  var stringInt = inputString.toString().split(",")
+  var intStack: Stack < Int > = Stack < Int > ()
+  for (string in stringInt) {
+    val intValue: Int ? = string.toIntOrNull()
+    if (intValue != null) {
+      intStack.push(intValue)
     } else {
-        return intArray.toTypedArray()
+      println("Invalid integer value: $string")
     }
+  }
+
+  return intStack
 }
 
 /*
@@ -170,7 +189,7 @@ fun setupArrayFromString(): Array < Int > ? {
     value that needs to be validated
  */
 fun checkValidityInt(value: Int ? ): Boolean {
-  if (value == null || value >= 5) {
+  if (value == null) {
     println("Please enter a valid numeric value")
     return false
   } else {
@@ -255,18 +274,18 @@ fun arrayContains(inputArray: Array < Int > , valueToSearch: Int ? ): Boolean {
 }
 
 /*
-    reverseArray() -> method to reverse the array entred by the user
+    reverseArray() -> method to reverse the Stack of Integeres entred by the user
 
-    @property inputArray = array entred by the user  
+    @property inputStack = array entred by the user  
 
     this method returns the array in a string datatype 
     that seperates each integer by a , so that there 
     are no issues in printing the results to the user.
  */
-fun reverseArray(inputArray: Array < Int > ): String {
+fun reverseArray(inputStack: Stack < Int > ): String {
   var newArray: Array < Int > = arrayOf()
-  for (i in inputArray.size - 1 downTo 0) {
-    newArray = newArray.plus(inputArray[i])
+  while (!inputStack.isEmpty()) {
+    newArray = newArray.plus(inputStack.pop())
   }
   return newArray.joinToString(",")
 }
