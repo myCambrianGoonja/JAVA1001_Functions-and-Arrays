@@ -110,7 +110,7 @@ fun usersChoiceResults(selectedOption: Int ? ) {
     This method takes the user input in int1,int2,int3,int4 format
     and converts into an interger Array
 
-   @return Array<Int> - converted string to Int array
+    @return Array<Int> - converted string to Int array
  */
 fun setupArrayFromString(): Array < Int > ? {
   var inputString = readLine()
